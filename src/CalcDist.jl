@@ -1,14 +1,14 @@
 module CalcDist
 
 import StatsFuns: normpdf, normcdf, norminvcdf,
-                  tdistpdf, tdistcdf,
-                  chisqpdf, chisqcdf,
-                  fdistpdf, fdistcdf
+                  tdistpdf, tdistcdf, tdistinvcdf,
+                  chisqpdf, chisqcdf, chisqinvcdf,
+                  fdistpdf, fdistcdf, fdistinvcdf
 
 export normalpdf, normalcdf, invNorm,
-       tpdf, tcdf,
-       X2pdf, X2cdf,
-       Fpdf, Fcdf,
+       tpdf, tcdf, invT,
+       X2pdf, X2cdf, invX2,
+       Fpdf, Fcdf, invF,
        binompdf, binomcdf,
        poissonpdf, poissoncdf,
        geometpdf, geometcdf,
@@ -74,6 +74,16 @@ function tcdf(lower, upper, ν)
 end
 
 """
+   invT(area, ν) \n
+      area: probability area
+         ν: degrees of freedom
+   inverse cumulative distribution function (Student's t)
+"""
+function invT(area, ν)
+   return tdistinvcdf(ν, area)
+end
+
+"""
    X2pdf(x, ν) \n
       x: value
       ν: degrees of freedom
@@ -92,6 +102,16 @@ end
 """
 function X2cdf(lower, upper, ν)
    return chisqcdf(ν, upper) - chisqcdf(ν, lower)
+end
+
+"""
+   invX2(area, ν) \n
+      area: probability area
+         ν: degrees of freedom
+   inverse cumulative distribution function (Chi-squared)
+"""
+function invX2(area, ν)
+   return chisqinvcdf(ν, area)
 end
 
 """
@@ -115,6 +135,17 @@ end
 """
 function Fcdf(lower, upper, nν, dν)
    return fdistcdf(nν, dν, upper) - fdistcdf(nν, dν, lower)
+end
+
+"""
+   invF(area, nν, dν) \n
+      area: probability area
+        nν: numerator degrees of freedom
+        dν: denominator degrees of freedom
+   inverse cumulative distribution function (F)
+"""
+function invF(area, nν, dν)
+   fdistinvcdf(nν, dν, area)
 end
 
 ##
