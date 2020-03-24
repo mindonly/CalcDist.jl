@@ -145,7 +145,7 @@ end
    inverse cumulative distribution function (F)
 """
 function invF(area, nν, dν)
-   fdistinvcdf(nν, dν, area)
+   return fdistinvcdf(nν, dν, area)
 end
 
 ##
